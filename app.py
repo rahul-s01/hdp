@@ -202,6 +202,13 @@ def plot3_png():
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
+@app.route('/plot_oldpeak.png')
+def plot4_png():
+    inp=session['oldpeak']
+    fig = plots.oldpeak_plot(inp)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 
 if __name__ == '__main__':
