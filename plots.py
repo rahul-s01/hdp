@@ -129,3 +129,37 @@ class Plots():
         ax.hlines(vals.loc[np.round(inp)].iloc[0][0],xmin=50,xmax=inp-2,ls='-',color=colors_dark[2],lw=1)  # You are here!
 
         return fig
+def oldpeak_plot(self,inp):
+        fig,ax = plt.subplots(figsize=(10,4))
+        df['oldpeak'].plot.kde(ls='--',color=colors_purple[0],ax=ax)
+
+        ax.spines['left'].set_color(None)
+        ax.spines['top'].set_color(None)
+        ax.spines['right'].set_color(None)
+
+        ax.set_ylabel(None)
+        ax.set_yticks([])
+        ax.set_xlabel('old peak',fontsize=12)
+
+        line = ax.get_lines()[-1]
+        x,y = line.get_data()
+        mask = x>6.5
+        x1,y1 = x[mask],y[mask]
+        ax.fill_between(x1,y1,alpha=0.7,facecolor = colors_purple[1])
+
+        # y values wrt to x
+        vals = pd.DataFrame(y,index=np.round(x))
+
+        # Making a point to indicate where the patient stands in the plot
+        ax.scatter(inp,vals.loc[np.round(inp)].iloc[0][0],c=colors_dark[1])
+
+        fig.text(s='severe coronary lesions ',x=0.800,y=0.25,
+                 fontdict={'color':'white','size':10,'fontweight':'semibold','fontname':'monospace','ha':'center'},
+                 backgroundcolor=colors_dark[2])
+        ax.text(s='You are here!',x=1.2,y=vals.loc[np.round(inp)].iloc[0][0],
+                fontdict={'color':'white','size':10,'fontweight':'semibold','fontname':'monospace','ha':'center'},
+                backgroundcolor=colors_dark[2])
+        ax.hlines(0.003,xmin=185,xmax=240,ls='-.',color=colors_dark[2],lw=0.8)
+        ax.hlines(vals.loc[np.round(inp)].iloc[0][0],xmin=50,xmax=inp-2,ls='-',color=colors_dark[2],lw=1)  # You are here!
+
+        return fig
